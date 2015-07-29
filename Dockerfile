@@ -29,7 +29,10 @@ ENV SPARK_JOBSERVER_VERSION master
 ENV SPARK_JOBSERVER_HOME /opt/spark-jobserver
 
 RUN mkdir -p ${SPARK_JOBSERVER_HOME}
-RUN git clone https://github.com/spark-jobserver/spark-jobserver.git /tmp/spark-jobserver
+RUN git clone https://github.com/spark-jobserver/spark-jobserver.git /tmp/spark-jobserver \
+	&& sed -i.bak \
+		's/\"joda-time\" % \"joda-time\" % \"2.1\"/\"joda-time\" % \"joda-time\" % \"2.8.1\"/' \
+		/tmp/spark-jobserver/project/Dependencies.scala
 
 WORKDIR /tmp/spark-jobserver
 
